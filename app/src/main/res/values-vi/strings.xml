@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Nothing</string>
+    <string name="please_check_your_network">Vui lòng kiểm tra mạng của bạn</string>
+    <string name="input_please">Vui lòng nhập đầy đủ thông tin</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="detail">Detail</string>
+    <string name="list">List</string>
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Nothing</string>
+    <string name="please_check_your_network">Please check your network</string>
+    <string name="input_please">Please input all fields</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="detail">Detail</string>
+    <string name="list">List</string>
+</resources>
