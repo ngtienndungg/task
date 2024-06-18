@@ -2,7 +2,6 @@ package vn.dungnt.nothing.presentation.composes.bottomNav
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +27,7 @@ import vn.dungnt.nothing.R
 import vn.dungnt.nothing.domain.entities.LanguageEntity
 import vn.dungnt.nothing.domain.entities.UserEntity
 import vn.dungnt.nothing.presentation.activities.LoginActivity
+import vn.dungnt.nothing.presentation.activities.MainActivity
 import vn.dungnt.nothing.presentation.composes.CustomDropDownMenu
 import vn.dungnt.nothing.presentation.viewmodels.AccountViewModel
 import vn.dungnt.nothing.utils.Constants
@@ -42,13 +42,14 @@ fun AccountScreen(
 ) {
 
     val userState by vm.userState.collectAsState()
-    val currentActivity = LocalContext.current as? Activity
     val context = LocalContext.current
+    val currentActivity = context as? Activity
+
 
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly) {
         LanguageChoosing(Modifier, defaultLanguage) {
             SharedPrefs.saveString(Constants.PREFS_LANGUAGE_MODEL, it.convertToJson())
-            updateLocale(context, SharedPrefs.getString(Constants.PREFS_LANGUAGE_MODEL, ""))
+            updateLocale(context, defaultLanguage)
             currentActivity?.recreate()
         }
         AccountInformation(userState)

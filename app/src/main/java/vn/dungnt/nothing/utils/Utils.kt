@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.LocaleList
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import vn.dungnt.nothing.application
@@ -30,9 +31,12 @@ object Utils {
     fun updateLocale(context: Context, languageCode: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.getSystemService(LocaleManager::class.java).applicationLocales =
-                LocaleList.forLanguageTags(languageCode)
+                LocaleList.forLanguageTags("en")
         } else {
-            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageCode))
+            Log.d("Utils", "updateLocaleValue: $languageCode" )
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+            Log.d("Utils", "attachBaseContextLocale: ${context.resources.configuration.locales.get(0)}")
+            Log.d("Utils", "attachBaseContextLocale: ${SharedPrefs.getString(Constants.PREFS_LANGUAGE_MODEL, "")}")
         }
     }
 

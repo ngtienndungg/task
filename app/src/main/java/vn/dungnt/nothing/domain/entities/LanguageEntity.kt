@@ -9,7 +9,7 @@ data class LanguageEntity(
     @DrawableRes val icon: Int
 ) {
 
-    fun getLanguageCode() = LanguageType.entries.find { it.type == id }?.code ?: LanguageType.VN.code
+    fun getLanguageCode() = LanguageType.entries.find { it.type == id }?.code ?: LanguageType.ENGLISH.code
 
     companion object{
         fun getAreaPhoneCodeModel():List<LanguageEntity>{
