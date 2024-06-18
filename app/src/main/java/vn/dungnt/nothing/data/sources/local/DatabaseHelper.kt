@@ -7,12 +7,13 @@ import io.realm.kotlin.ext.copyFromRealm
 import io.realm.kotlin.query.RealmQuery
 import io.realm.kotlin.query.RealmResults
 import io.realm.kotlin.types.RealmObject
+import vn.dungnt.nothing.data.models.BookDetailModel
 import vn.dungnt.nothing.data.models.BookModel
 import vn.dungnt.nothing.data.models.UserModel
 
 class DatabaseHelper {
     private val config =
-        RealmConfiguration.Builder(schema = setOf(UserModel::class, BookModel::class))
+        RealmConfiguration.Builder(schema = setOf(UserModel::class, BookModel::class, BookDetailModel::class))
             .schemaVersion(1).name("app_database.db").deleteRealmIfMigrationNeeded().build()
     val realm = Realm.open(config)
 

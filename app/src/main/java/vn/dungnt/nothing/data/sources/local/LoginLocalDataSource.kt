@@ -7,6 +7,10 @@ import javax.inject.Inject
 class LoginLocalDataSource @Inject constructor(private val databaseHelper: DatabaseHelper) {
     suspend fun saveUser(user: UserModel) = databaseHelper.insertOrUpdate(user)
     fun getUser(username: String) = databaseHelper.findFirst {
-        it.query<UserModel>().query("id = $0", username)
+        it.query<UserModel>().query("username = $0", username)
+    }
+
+    suspend fun deleteUser(username: String) = databaseHelper.deleteByQuery {
+        it.query<UserModel>().query("username = $0", username)
     }
 }

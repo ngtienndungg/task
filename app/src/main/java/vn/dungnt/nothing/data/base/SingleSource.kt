@@ -42,7 +42,6 @@ private suspend fun <M> FlowCollector<NetworkResult<M>>.processResultFlow(
         }
 
         is NetworkResult.Failure -> {
-            Log.d("isSuccess", "Failure")
             when {
                 responseStatus.exception?.is401UnauthorizedError() == true -> {
                     EventBus.getDefault().post(MessageEvent(EventType.CLEAR_DATA_GO_TO_LOGIN))

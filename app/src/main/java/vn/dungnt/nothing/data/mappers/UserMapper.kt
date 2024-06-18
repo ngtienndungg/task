@@ -10,8 +10,8 @@ class UserMapper : Mapper<UserModel, UserEntity> {
             model.id,
             model.username,
             model.password,
-            model.email,
             model.accessToken,
+            model.email,
             model.firstName,
             model.lastName,
             model.avatar

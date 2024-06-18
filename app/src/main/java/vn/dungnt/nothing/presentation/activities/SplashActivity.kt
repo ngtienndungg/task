@@ -23,9 +23,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import vn.dungnt.nothing.R
 import vn.dungnt.nothing.presentation.activities.base.BaseActivity
+import vn.dungnt.nothing.presentation.theme.Blue80
 import vn.dungnt.nothing.presentation.theme.NothingTheme
-import vn.dungnt.nothing.presentation.theme.Pink80
-import vn.dungnt.nothing.presentation.theme.Purple80
 import vn.dungnt.nothing.utils.Constants
 import vn.dungnt.nothing.utils.SharedPrefs
 
@@ -52,7 +51,7 @@ class SplashActivity : BaseActivity() {
     fun SplashScreen() {
         val systemUiController: SystemUiController = rememberSystemUiController()
         LaunchedEffect(Unit) {
-            systemUiController.setStatusBarColor(color = Purple80)
+            systemUiController.setStatusBarColor(color = Blue80)
         }
         NothingTheme(darkTheme = false) {
             Surface(
@@ -62,7 +61,7 @@ class SplashActivity : BaseActivity() {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(color = colorResource(id = R.color.color_toast_success)),
+                        .background(color = colorResource(id = R.color.color_main)),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(

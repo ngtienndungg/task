@@ -1,5 +1,6 @@
 package vn.dungnt.nothing.data.repositories
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import vn.dungnt.nothing.data.base.NetworkResult
@@ -24,8 +25,8 @@ class LoginRepositoryImpl @Inject constructor(
             if (networkResult is NetworkResult.Success) {
                 networkResult.data?.let {
                     SharedPrefs.saveString(
-                        Constants.PREFS_ACCESS_TOKEN,
-                        networkResult.data.accessToken
+                        Constants.PREFS_USERNAME,
+                        networkResult.data.username
                     )
                     localDataSource.saveUser(it)
                 }
@@ -37,5 +38,11 @@ class LoginRepositoryImpl @Inject constructor(
     override suspend fun getCurrentUser(username: String): UserEntity? {
         val userModel = localDataSource.getUser(username)
         return userModel?.let { _userMapper.toEntity(it) }
+    }
+
+    override suspend fun logout(username: String): Flow<NetworkResult<Any>> {
+        SharedPrefs.clearAllData()
+        localDataSource.deleteUser(username)
+        return remoteDataSource.logout()
     }
 }

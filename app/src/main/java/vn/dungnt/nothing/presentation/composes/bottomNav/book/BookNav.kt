@@ -1,4 +1,4 @@
-package vn.dungnt.nothing.presentation.composes.book
+package vn.dungnt.nothing.presentation.composes.bottomNav.book
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -6,13 +6,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import vn.dungnt.nothing.presentation.composes.DetailScreen
-import vn.dungnt.nothing.presentation.viewmodels.BookViewModel
 import vn.dungnt.nothing.utils.Constants
 
 fun NavGraphBuilder.bookGraph(
-    navController: NavHostController,
-    vm: BookViewModel
+    navController: NavHostController
 ) {
     navigation(
         route = Constants.BookScreen.Start.name,

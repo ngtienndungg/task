@@ -9,4 +9,5 @@ import vn.dungnt.nothing.domain.entities.UserEntity
 interface LoginRepository {
     fun login(@Body loginRequest: LoginRequest): Flow<NetworkResult<UserEntity>>
     suspend fun getCurrentUser(username: String): UserEntity?
+    suspend fun logout(username: String): Flow<NetworkResult<Any>>
 }

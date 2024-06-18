@@ -15,21 +15,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import vn.dungnt.nothing.presentation.composes.AccountScreen
-import vn.dungnt.nothing.presentation.composes.book.bookGraph
+import vn.dungnt.nothing.presentation.composes.bottomNav.book.bookGraph
 import vn.dungnt.nothing.presentation.viewmodels.BookViewModel
 import vn.dungnt.nothing.utils.Constants
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph(navController: NavHostController, defaultLanguage: String) {
     val bookViewModel = hiltViewModel<BookViewModel>()
     NavHost(
         navController = navController,
         startDestination = Constants.BookScreen.Start.name
     ) {
-        bookGraph(navController, bookViewModel)
-        composable(Destinations.Account.route) {
-            AccountScreen()
+        bookGraph(navController)
+        composable(Destinations.AccountScreen.route) {
+            AccountScreen(defaultLanguage = defaultLanguage)
         }
     }
 }
@@ -39,7 +38,7 @@ fun BottomNavBar(
     navController: NavHostController, modifier: Modifier = Modifier
 ) {
     val screens = listOf(
-        Destinations.BookScreen, Destinations.Account
+        Destinations.BookScreen, Destinations.AccountScreen
     )
 
     NavigationBar(

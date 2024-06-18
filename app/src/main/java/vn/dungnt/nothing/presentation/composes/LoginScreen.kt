@@ -1,7 +1,6 @@
 package vn.dungnt.nothing.presentation.composes
 
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -73,13 +72,12 @@ fun LoginScreen(
                 )
                 LoginButton(username = username, password = password) { username, password ->
                     vm.login(username, password) { _, _ ->
-                        Log.d("isLogin", "Login")
                         SharedPrefs.saveBoolean(Constants.PREFS_LOGIN, true)
+                        val intent = Intent(currentActivity, MainActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         currentActivity?.startActivity(
-                            Intent(
-                                currentActivity,
-                                MainActivity::class.java
-                            )
+                            intent
                         )
                     }
                 }

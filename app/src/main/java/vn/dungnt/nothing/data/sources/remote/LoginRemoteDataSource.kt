@@ -14,4 +14,10 @@ class LoginRemoteDataSource @Inject constructor(private val apiService: APIServi
             apiService.login(loginRequest)
         }
     }
+
+    fun logout(): Flow<NetworkResult<Any>> = resultFlow {
+        getNetworkResult {
+            apiService.logoutUser()
+        }
+    }
 }

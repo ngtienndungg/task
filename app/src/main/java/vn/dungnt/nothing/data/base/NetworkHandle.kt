@@ -16,7 +16,20 @@ suspend fun <T> getNetworkResult(networkCall: suspend () -> Response<ApiResponse
         e.printStackTrace()
         return NetworkResult.Failure(message = e.message.toString())
     }
+}
 
+suspend fun <T> getLocalResult(localCall: () -> T): NetworkResult<T> {
+    val response = localCall.invoke()
+    try {
+        return if (response == null) {
+            NetworkResult.Failure(message = "Unknown Error")
+        } else {
+            NetworkResult.Success(data = response)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return NetworkResult.Failure(message = e.message.toString())
+    }
 }
 
 private fun <T> checkNetworkResult(responseBody: ApiResponse<T>?): NetworkResult<T> {

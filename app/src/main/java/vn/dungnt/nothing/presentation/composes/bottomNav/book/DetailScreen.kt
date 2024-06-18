@@ -1,4 +1,4 @@
-package vn.dungnt.nothing.presentation.composes
+package vn.dungnt.nothing.presentation.composes.bottomNav.book
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -13,24 +14,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import vn.dungnt.nothing.domain.entities.BookEntity
+import vn.dungnt.nothing.domain.entities.BookDetailEntity
 import vn.dungnt.nothing.presentation.viewmodels.DetailViewModel
 
 @Composable
 fun DetailScreen(
     id: Int,
-    modifier: Modifier = Modifier,
     vm: DetailViewModel = hiltViewModel<DetailViewModel>()
 ) {
-    vm.getBookDetail(id)
     val uiState by vm.detailState.collectAsState()
     uiState.bookDetail?.let {
         BookItem(book = it)
     }
+    LaunchedEffect(uiState) {
+        vm.getBookDetail(id)
+    }
 }
 
 @Composable
-fun BookItem(book: BookEntity) {
+fun BookItem(book: BookDetailEntity) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(model = book.avatar, contentDescription = "")
         Row(horizontalArrangement = Arrangement.SpaceEvenly) {

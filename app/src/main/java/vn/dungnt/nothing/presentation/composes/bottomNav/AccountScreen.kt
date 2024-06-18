@@ -1,6 +1,8 @@
-package vn.dungnt.nothing.presentation.composes
+package vn.dungnt.nothing.presentation.composes.bottomNav
 
+import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,32 +28,27 @@ import vn.dungnt.nothing.R
 import vn.dungnt.nothing.domain.entities.LanguageEntity
 import vn.dungnt.nothing.domain.entities.UserEntity
 import vn.dungnt.nothing.presentation.activities.LoginActivity
-import vn.dungnt.nothing.presentation.activities.MainActivity
+import vn.dungnt.nothing.presentation.composes.CustomDropDownMenu
 import vn.dungnt.nothing.presentation.viewmodels.AccountViewModel
 import vn.dungnt.nothing.utils.Constants
 import vn.dungnt.nothing.utils.SharedPrefs
 import vn.dungnt.nothing.utils.Utils.updateLocale
-import vn.dungnt.nothing.utils.convertFromJson
 import vn.dungnt.nothing.utils.convertToJson
 
 @Composable
-fun AccountScreen(vm: AccountViewModel = hiltViewModel<AccountViewModel>()) {
+fun AccountScreen(
+    vm: AccountViewModel = hiltViewModel<AccountViewModel>(),
+    defaultLanguage: String
+) {
 
     val userState by vm.userState.collectAsState()
-    val currentActivity = LocalContext.current as? MainActivity
+    val currentActivity = LocalContext.current as? Activity
     val context = LocalContext.current
 
-    val pref = SharedPrefs.getString(Constants.PREFS_LANGUAGE_MODEL, "")
-    val languageModel = if (pref.isEmpty()) {
-        LanguageEntity.getLanguageList()[0]
-    } else {
-        pref.convertFromJson()
-    }
-
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly) {
-        LanguageChoosing(Modifier, languageModel.name) {
+        LanguageChoosing(Modifier, defaultLanguage) {
             SharedPrefs.saveString(Constants.PREFS_LANGUAGE_MODEL, it.convertToJson())
-            updateLocale(context, it.getLanguageCode())
+            updateLocale(context, SharedPrefs.getString(Constants.PREFS_LANGUAGE_MODEL, ""))
             currentActivity?.recreate()
         }
         AccountInformation(userState)

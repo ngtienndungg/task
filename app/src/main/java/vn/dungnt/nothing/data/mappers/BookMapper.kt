@@ -1,12 +1,36 @@
 package vn.dungnt.nothing.data.mappers
 
 import vn.dungnt.nothing.data.base.Mapper
+import vn.dungnt.nothing.data.models.BookDetailModel
 import vn.dungnt.nothing.data.models.BookModel
+import vn.dungnt.nothing.domain.entities.BookDetailEntity
 import vn.dungnt.nothing.domain.entities.BookEntity
 
 class BookMapper : Mapper<BookModel, BookEntity> {
     override fun toEntity(model: BookModel): BookEntity {
         return BookEntity(
+            model.id,
+            model.title,
+            model.subtitle,
+            model.category,
+            model.avatar
+        )
+    }
+
+    override fun toModel(entity: BookEntity): BookModel {
+        return BookModel().also {
+            it.id = entity.id
+            it.title = entity.title
+            it.subtitle = entity.subtitle
+            it.category = entity.category
+            it.avatar = entity.avatar
+        }
+    }
+}
+
+class BookDetailMapper : Mapper<BookDetailModel, BookDetailEntity> {
+    override fun toEntity(model: BookDetailModel): BookDetailEntity {
+        return BookDetailEntity(
             model.id,
             model.title,
             model.subtitle,
@@ -19,8 +43,8 @@ class BookMapper : Mapper<BookModel, BookEntity> {
         )
     }
 
-    override fun toModel(entity: BookEntity): BookModel {
-        return BookModel().also {
+    override fun toModel(entity: BookDetailEntity): BookDetailModel {
+        return BookDetailModel().also {
             it.id = entity.id
             it.title = entity.title
             it.subtitle = entity.subtitle

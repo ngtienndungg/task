@@ -1,14 +1,17 @@
-package vn.dungnt.nothing.presentation.composes.book
+package vn.dungnt.nothing.presentation.composes.bottomNav.book
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -28,9 +31,10 @@ fun BookScreen(
     vm: BookViewModel = hiltViewModel<BookViewModel>(),
     onItemClick: (id: Int) -> Unit
 ) {
+    val selectedBook = 0
     val bookState by vm.bookState.collectAsState()
     bookState.bookList?.let {
-        BookListColumn(bookList = it, onClick = { id ->
+        BookListColumn(bookList = it, modifier = modifier.fillMaxWidth(), onClick = { id ->
             onItemClick(id)
         })
     }
@@ -48,6 +52,10 @@ fun BookScreen(
 
         else -> {}
     }
+
+    LaunchedEffect(bookState) {
+        vm.getBooks()
+    }
 }
 
 @Composable
@@ -59,20 +67,13 @@ fun BookItem(
     imageUrl: String,
     onItemClick: (id: Int) -> Unit
 ) {
-    Column(modifier = Modifier.clickable {
+    Row(modifier = Modifier.clickable {
         onItemClick(id)
-    }, verticalArrangement = Arrangement.Center) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(model = imageUrl, contentDescription = "")
+    }, horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+        AsyncImage(model = imageUrl, contentDescription = "", modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(verticalArrangement = Arrangement.Center) {
             Text(text = title)
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
             Text(text = subtitle)
             Text(text = category)
         }
@@ -89,15 +90,15 @@ fun BookListColumn(
     LazyColumn(
         modifier = modifier
     ) {
-        items(bookList.size) { id ->
+        items(bookList.size) { item ->
             BookItem(
-                id = bookList[id].id ?: 0,
-                title = bookList[id].title ?: "",
-                subtitle = bookList[id].subtitle ?: "",
-                category = bookList[id].category ?: "",
-                imageUrl = bookList[id].avatar ?: ""
+                id = bookList[item].id ?: 0,
+                title = bookList[item].title ?: "",
+                subtitle = bookList[item].subtitle ?: "",
+                category = bookList[item].category ?: "",
+                imageUrl = bookList[item].avatar ?: ""
             ) {
-                onClick(id)
+                bookList[item].id?.let { it1 -> onClick(it1) }
             }
         }
     }
