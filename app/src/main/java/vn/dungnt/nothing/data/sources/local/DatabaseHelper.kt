@@ -13,7 +13,13 @@ import vn.dungnt.nothing.data.models.UserModel
 
 class DatabaseHelper {
     private val config =
-        RealmConfiguration.Builder(schema = setOf(UserModel::class, BookModel::class, BookDetailModel::class))
+        RealmConfiguration.Builder(
+            schema = setOf(
+                UserModel::class,
+                BookModel::class,
+                BookDetailModel::class
+            )
+        )
             .schemaVersion(1).name("app_database.db").deleteRealmIfMigrationNeeded().build()
     val realm = Realm.open(config)
 

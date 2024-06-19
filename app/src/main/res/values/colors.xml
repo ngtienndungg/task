@@ -11,4 +11,5 @@
     <color name="color_red">#FF0000</color>
     <color name="color_toast_success">#0DA97E</color>
     <color name="color_border_and_line">#d3d6d7</color>
+    <color name="colorStatusBar">#D0BCFF</color>
 </resources>

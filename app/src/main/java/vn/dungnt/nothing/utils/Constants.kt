@@ -20,8 +20,7 @@ object Constants {
 
     enum class BookScreen(@StringRes val title: Int) {
         Start(title = R.string.app_name),
-        Detail(title = R.string.detail),
-        List(title = R.string.list)
+        Detail(title = R.string.detail)
     }
 
     const val TIME_DISPLAY_TOAST = 3000L

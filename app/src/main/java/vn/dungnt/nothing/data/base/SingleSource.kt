@@ -15,16 +15,20 @@ import vn.dungnt.nothing.utils.Utils.getString
 import vn.dungnt.nothing.utils.Utils.isNetworkAvailable
 import vn.dungnt.nothing.utils.is401UnauthorizedError
 
-fun <M> resultFlow(networkCall: suspend () -> NetworkResult<M>): Flow<NetworkResult<M>> =
+fun <M> resultFlow(
+    isLocal: Boolean = false,
+    networkCall: suspend () -> NetworkResult<M>
+): Flow<NetworkResult<M>> =
     flow {
         emit(NetworkResult.Loading())
-        processResultFlow(networkCall)
+        processResultFlow(networkCall, isLocal)
     }.flowOn(Dispatchers.IO)
 
 private suspend fun <M> FlowCollector<NetworkResult<M>>.processResultFlow(
     networkCall: suspend () -> NetworkResult<M>,
+    isLocal: Boolean
 ) {
-    if (!isNetworkAvailable()) {
+    if (!isNetworkAvailable() && !isLocal) {
         emit(
             NetworkResult.Failure(
                 message = getString(application!!, R.string.please_check_your_network)
@@ -32,7 +36,7 @@ private suspend fun <M> FlowCollector<NetworkResult<M>>.processResultFlow(
         )
     } else when (val responseStatus = networkCall.invoke()) {
         is NetworkResult.Success -> {
-            Log.d("isSuccess", "Success")
+            Log.d("SingleSource", "processResultFlow: emitted")
             emit(
                 NetworkResult.Success(
                     responseStatus.message,

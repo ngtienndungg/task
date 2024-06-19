@@ -1,5 +1,6 @@
 package vn.dungnt.nothing.presentation.composes
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -102,6 +103,7 @@ fun CustomToast(
 
 @Composable
 fun ShowProgressDialog() {
+    Log.d("ShowDialog", "ShowProgressDialog: Called")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,7 +111,10 @@ fun ShowProgressDialog() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CircularProgressIndicator(color = colorResource(id = R.color.purple_200))
+        CircularProgressIndicator(
+            color = colorResource(id = R.color.color_main),
+            modifier = Modifier.height(30.dp)
+        )
     }
 }
 
@@ -131,7 +136,11 @@ fun CustomDropDownMenu(
                 .height(dropdownHeight)
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color.White)
-                .border(1.dp, colorResource(id = R.color.color_border_and_line), RoundedCornerShape(10.dp))
+                .border(
+                    1.dp,
+                    colorResource(id = R.color.color_border_and_line),
+                    RoundedCornerShape(10.dp)
+                )
                 .clickable { expanded = true }
                 .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -178,7 +187,12 @@ fun CustomDropDownMenu(
                         }
                         Text(text = item.name, color = textColor)
                     },
-                    leadingIcon = { Image(painter = painterResource(id = item.icon), contentDescription = null) },
+                    leadingIcon = {
+                        Image(
+                            painter = painterResource(id = item.icon),
+                            contentDescription = null
+                        )
+                    },
                 )
             }
         }

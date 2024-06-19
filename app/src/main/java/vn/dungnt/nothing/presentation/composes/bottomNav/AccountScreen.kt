@@ -1,6 +1,5 @@
 package vn.dungnt.nothing.presentation.composes.bottomNav
 
-import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,10 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import vn.dungnt.nothing.R
 import vn.dungnt.nothing.domain.entities.LanguageEntity
+import vn.dungnt.nothing.domain.entities.UiState
 import vn.dungnt.nothing.domain.entities.UserEntity
 import vn.dungnt.nothing.presentation.activities.LoginActivity
 import vn.dungnt.nothing.presentation.activities.MainActivity
 import vn.dungnt.nothing.presentation.composes.CustomDropDownMenu
+import vn.dungnt.nothing.presentation.composes.CustomToast
+import vn.dungnt.nothing.presentation.composes.ShowProgressDialog
 import vn.dungnt.nothing.presentation.viewmodels.AccountViewModel
 import vn.dungnt.nothing.utils.Constants
 import vn.dungnt.nothing.utils.SharedPrefs
@@ -42,8 +44,9 @@ fun AccountScreen(
 ) {
 
     val userState by vm.userState.collectAsState()
+    val uiState by vm.uiState.collectAsState()
     val context = LocalContext.current
-    val currentActivity = context as? Activity
+    val currentActivity = context as? MainActivity
 
 
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly) {
@@ -63,18 +66,32 @@ fun AccountScreen(
     LaunchedEffect(userState) {
         vm.getCurrentUser(SharedPrefs.getString(Constants.PREFS_USERNAME, ""))
     }
+
+    when (uiState) {
+        is UiState.Loading -> ShowProgressDialog()
+        is UiState.Error -> {
+            (uiState as UiState.Error).errorMessage?.takeIf { it.isNotEmpty() }?.let {
+                CustomToast(message = it) {
+                    vm.setUiState(UiState.None)
+                }
+
+            }
+        }
+
+        else -> {}
+    }
 }
 
 @Composable
 fun AccountInformation(user: UserEntity) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Name: ${user.lastName} ${user.firstName}",
+            text = stringResource(id = R.string.fullName) + ": ${user.lastName} ${user.firstName}",
             modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Username: ${user.username}",
+            text = stringResource(id = R.string.username) + ": ${user.username}",
             modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(10.dp))

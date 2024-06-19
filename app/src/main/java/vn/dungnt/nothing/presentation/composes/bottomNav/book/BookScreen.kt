@@ -1,5 +1,6 @@
 package vn.dungnt.nothing.presentation.composes.bottomNav.book
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,17 +32,18 @@ fun BookScreen(
     vm: BookViewModel = hiltViewModel<BookViewModel>(),
     onItemClick: (id: Int) -> Unit
 ) {
-    val selectedBook = 0
-    val bookState by vm.bookState.collectAsState()
-    bookState.bookList?.let {
-        BookListColumn(bookList = it, modifier = modifier.fillMaxWidth(), onClick = { id ->
-            onItemClick(id)
-        })
-    }
+    val bookListState by vm.bookListState.collectAsState()
+    BookListColumn(bookList = bookListState, modifier = modifier.fillMaxWidth(), onClick = { id ->
+        onItemClick(id)
+    })
 
     val uiState by vm.uiState.collectAsState()
     when (uiState) {
-        is UiState.Loading -> ShowProgressDialog()
+        is UiState.Loading -> {
+            Log.d("BookScreen", "BookScreen: Loading")
+            ShowProgressDialog()
+        }
+
         is UiState.Error -> {
             (uiState as UiState.Error).errorMessage?.takeIf { it.isNotEmpty() }?.let {
                 CustomToast(message = it, modifier = modifier) {
@@ -51,10 +53,6 @@ fun BookScreen(
         }
 
         else -> {}
-    }
-
-    LaunchedEffect(bookState) {
-        vm.getBooks()
     }
 }
 

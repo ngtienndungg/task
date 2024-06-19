@@ -8,6 +8,4 @@ import vn.dungnt.nothing.domain.entities.BookEntity
 interface BookRepository {
     fun getBooks(): Flow<NetworkResult<List<BookEntity>>>
     fun getBookDetail(id: Int): Flow<NetworkResult<BookDetailEntity>>
-    suspend fun getBooksFromLocal(): List<BookEntity>?
-    suspend fun getBookDetailFromLocal(id: Int): BookDetailEntity
 }

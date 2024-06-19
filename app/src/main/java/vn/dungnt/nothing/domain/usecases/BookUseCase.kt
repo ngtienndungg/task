@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class BookUseCase @Inject constructor(private val bookRepository: BookRepository) {
     fun getBooks(): Flow<NetworkResult<List<BookEntity>>> = bookRepository.getBooks()
-    suspend fun getBooksFromLocal(): List<BookEntity>? = bookRepository.getBooksFromLocal()
-    fun getBookDetail(id: Int): Flow<NetworkResult<BookDetailEntity>> = bookRepository.getBookDetail(id)
-    suspend fun getBookDetailFromLocal(id: Int): BookDetailEntity = bookRepository.getBookDetailFromLocal(id)
+    fun getBookDetail(id: Int): Flow<NetworkResult<BookDetailEntity>> =
+        bookRepository.getBookDetail(id)
 }

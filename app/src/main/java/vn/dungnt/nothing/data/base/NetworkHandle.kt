@@ -18,11 +18,11 @@ suspend fun <T> getNetworkResult(networkCall: suspend () -> Response<ApiResponse
     }
 }
 
-suspend fun <T> getLocalResult(localCall: () -> T): NetworkResult<T> {
+fun <T> getLocalResult(localCall: () -> T): NetworkResult<T> {
     val response = localCall.invoke()
     try {
         return if (response == null) {
-            NetworkResult.Failure(message = "Unknown Error")
+            NetworkResult.Failure(message = "Data is empty")
         } else {
             NetworkResult.Success(data = response)
         }

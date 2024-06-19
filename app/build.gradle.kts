@@ -4,7 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
-    id ("io.realm.kotlin")
+    id("io.realm.kotlin")
 }
 
 android {
@@ -43,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -50,6 +51,20 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    flavorDimensions += "default"
+    productFlavors {
+        create("dev") {
+            isDefault = true
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"https://api.mockfly.dev/\"")
+        }
+        create("staging") {
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"https://api.mockfly.dev/\"")
+        }
+        create("production") {
+            buildConfigField("String", "SERVER_NORMAL_URL", "\"https://api.mockfly.dev/\"")
         }
     }
 }
@@ -74,6 +89,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("androidx.compose.material:material-icons-extended:1.5.1")
 
     // Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")

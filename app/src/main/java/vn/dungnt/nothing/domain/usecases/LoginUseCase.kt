@@ -11,6 +11,8 @@ class LoginUseCase @Inject constructor(private val repository: LoginRepository) 
     fun login(loginRequest: LoginRequest): Flow<NetworkResult<UserEntity>> =
         repository.login(loginRequest)
 
-    suspend fun getCurrentUser(username: String): UserEntity? = repository.getCurrentUser(username)
+    suspend fun getCurrentUser(username: String): Flow<NetworkResult<UserEntity>> =
+        repository.getCurrentUser(username)
+
     suspend fun logout(username: String) = repository.logout(username)
 }

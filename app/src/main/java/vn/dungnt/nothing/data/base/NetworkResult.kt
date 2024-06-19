@@ -13,7 +13,7 @@ sealed class NetworkResult<out T> {
         NetworkResult<T>()
 }
 
-fun <M, E> NetworkResult<M>.transformToEntity(mapper: Mapper<M, E>?): NetworkResult<E> {
+fun <M, E> NetworkResult<M?>.transformToEntity(mapper: Mapper<M, E>?): NetworkResult<E> {
     return when (this) {
         is NetworkResult.Loading -> NetworkResult.Loading()
         is NetworkResult.Failure -> NetworkResult.Failure(
@@ -35,8 +35,8 @@ fun <T> NetworkResult<T>.handleNetworkResult(
     when (this) {
         is NetworkResult.Loading -> onLoading(true)
         is NetworkResult.Failure -> {
-            onFailure(this)
             onLoading(false)
+            onFailure(this)
         }
 
         is NetworkResult.Success -> {

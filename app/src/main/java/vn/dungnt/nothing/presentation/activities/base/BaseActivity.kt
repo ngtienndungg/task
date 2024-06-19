@@ -3,13 +3,14 @@ package vn.dungnt.nothing.presentation.activities.base
 import android.content.Context
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import vn.dungnt.nothing.domain.entities.LanguageEntity
 import vn.dungnt.nothing.utils.Constants
 import vn.dungnt.nothing.utils.SharedPrefs
 import vn.dungnt.nothing.utils.Utils
 import vn.dungnt.nothing.utils.convertFromJson
 
-open class BaseActivity : ComponentActivity() {
+open class BaseActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase)

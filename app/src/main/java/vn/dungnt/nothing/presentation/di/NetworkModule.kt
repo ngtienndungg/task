@@ -12,6 +12,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import vn.dungnt.nothing.BuildConfig
 import vn.dungnt.nothing.data.sources.remote.APIService
 import vn.dungnt.nothing.domain.entities.LanguageEntity
 import vn.dungnt.nothing.domain.entities.LanguageType
@@ -68,7 +69,7 @@ object NetworkModule {
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .baseUrl("https://api.mockfly.dev/")
+            .baseUrl(BuildConfig.SERVER_NORMAL_URL)
             .client(
                 provideAPIClient()
             ).build()
