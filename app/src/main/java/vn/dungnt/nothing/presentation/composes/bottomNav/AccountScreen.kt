@@ -1,6 +1,5 @@
 package vn.dungnt.nothing.presentation.composes.bottomNav
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,11 +21,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.greenrobot.eventbus.EventBus
 import vn.dungnt.nothing.R
+import vn.dungnt.nothing.data.models.EventType
+import vn.dungnt.nothing.data.models.MessageEvent
 import vn.dungnt.nothing.domain.entities.LanguageEntity
 import vn.dungnt.nothing.domain.entities.UiState
 import vn.dungnt.nothing.domain.entities.UserEntity
-import vn.dungnt.nothing.presentation.activities.LoginActivity
 import vn.dungnt.nothing.presentation.activities.MainActivity
 import vn.dungnt.nothing.presentation.composes.CustomDropDownMenu
 import vn.dungnt.nothing.presentation.composes.CustomToast
@@ -58,8 +59,6 @@ fun AccountScreen(
         AccountInformation(userState)
         LogOutButton(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
             vm.logout()
-            currentActivity?.startActivity(Intent(currentActivity, LoginActivity::class.java))
-            currentActivity?.finish()
         }
     }
 

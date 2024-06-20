@@ -33,10 +33,10 @@ fun <T> getLocalResult(localCall: () -> T): NetworkResult<T> {
 }
 
 private fun <T> checkNetworkResult(responseBody: ApiResponse<T>?): NetworkResult<T> {
-    if (responseBody is ApiResponse<T>) {
-        return NetworkResult.Success(data = responseBody.data?.user, message = responseBody.message)
+    return if (responseBody is ApiResponse<T>) {
+        NetworkResult.Success(data = responseBody.data?.user, message = responseBody.message)
     } else {
-        return getNetworkResultFailure()
+        getNetworkResultFailure()
     }
 }
 

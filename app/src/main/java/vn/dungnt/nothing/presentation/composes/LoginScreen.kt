@@ -2,6 +2,7 @@ package vn.dungnt.nothing.presentation.composes
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -26,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -88,15 +92,17 @@ fun LoginScreen(
                         .fillMaxWidth(),
                     label = {
                         Text(text = stringResource(id = R.string.password))
-                    }, trailingIcon = {
-                        val image = if (isVisiblePassword)
+                    },
+                    trailingIcon = {
+                        val image = if (!isVisiblePassword)
                             Icons.Filled.Visibility
                         else
                             Icons.Filled.VisibilityOff
                         IconButton(onClick = { isVisiblePassword = !isVisiblePassword }) {
                             Icon(imageVector = image, contentDescription = "")
                         }
-                    }
+                    },
+                    visualTransformation = if (isVisiblePassword) VisualTransformation.None else PasswordVisualTransformation(),
                 )
                 LoginButton(username = username, password = password) { username, password ->
                     vm.login(username, password) { _, _ ->
@@ -132,12 +138,15 @@ fun LoginScreen(
 
 @Composable
 fun LoginButton(username: String, password: String, onLogin: (String, String) -> Unit) {
-    Button(
-        onClick = { onLogin(username, password) }, modifier = Modifier
-            .padding(12.dp)
-            .fillMaxWidth()
-    ) {
-        Text(text = stringResource(id = R.string.login))
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Button(
+            onClick = { onLogin(username, password) }, modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth()
+        ) {
+            Text(text = stringResource(id = R.string.login))
+        }
+        CircularProgressIndicator(modifier = Modifier.align(alignment = Alignment.Center))
     }
 }
 
@@ -164,22 +173,4 @@ fun LanguageChoosing(
             dropdownHeight = 32.dp
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    OutlinedTextField(
-        value = "",
-        placeholder = {
-            Text(text = stringResource(id = R.string.username))
-        },
-        onValueChange = {},
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        label = {
-            Text(text = stringResource(id = R.string.username))
-        },
-    )
 }

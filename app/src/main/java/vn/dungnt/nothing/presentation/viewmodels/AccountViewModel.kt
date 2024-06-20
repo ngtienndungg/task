@@ -6,7 +6,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import vn.dungnt.nothing.data.base.handleNetworkResult
+import vn.dungnt.nothing.data.models.EventType
+import vn.dungnt.nothing.data.models.MessageEvent
 import vn.dungnt.nothing.domain.entities.UiState
 import vn.dungnt.nothing.domain.entities.UserEntity
 import vn.dungnt.nothing.domain.usecases.LoginUseCase
@@ -47,6 +50,7 @@ class AccountViewModel @Inject constructor(private val loginUseCase: LoginUseCas
     fun logout() {
         viewModelScope.launch {
             loginUseCase.logout(SharedPrefs.getString(Constants.PREFS_USERNAME, ""))
+            EventBus.getDefault().post(MessageEvent(EventType.CLEAR_DATA_GO_TO_LOGIN))
         }
     }
 }

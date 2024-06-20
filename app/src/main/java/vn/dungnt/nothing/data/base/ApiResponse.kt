@@ -3,7 +3,7 @@ package vn.dungnt.nothing.data.base
 import com.google.gson.annotations.SerializedName
 
 data class ApiResponse<T>(
-    val status: String?,
+    val status: Boolean?,
     val message: String?,
     val data: NestedResponse<T>?
 )

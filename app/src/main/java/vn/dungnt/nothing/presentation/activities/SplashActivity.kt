@@ -1,6 +1,7 @@
 package vn.dungnt.nothing.presentation.activities
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -39,9 +40,15 @@ class SplashActivity : BaseActivity() {
         lifecycleScope.launch {
             delay(2000)
             if (SharedPrefs.getBoolean(Constants.PREFS_LOGIN, false)) {
-                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                startActivity(
+                    Intent(this@SplashActivity, MainActivity::class.java),
+                    ActivityOptions.makeSceneTransitionAnimation(this@SplashActivity).toBundle()
+                )
             } else {
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                startActivity(
+                    Intent(this@SplashActivity, LoginActivity::class.java),
+                    ActivityOptions.makeSceneTransitionAnimation(this@SplashActivity).toBundle()
+                )
             }
             finish()
         }

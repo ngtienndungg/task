@@ -40,8 +40,8 @@ fun <T> NetworkResult<T>.handleNetworkResult(
         }
 
         is NetworkResult.Success -> {
-            onSuccess(this)
             onLoading(false)
+            onSuccess(this)
         }
     }
 }

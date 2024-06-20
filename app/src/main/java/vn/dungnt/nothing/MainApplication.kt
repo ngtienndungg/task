@@ -2,6 +2,7 @@ package vn.dungnt.nothing
 
 import android.app.Application
 import android.content.Context
+import androidx.multidex.MultiDex
 import dagger.hilt.android.HiltAndroidApp
 
 var application: MainApplication? = null
@@ -15,5 +16,6 @@ class MainApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 }

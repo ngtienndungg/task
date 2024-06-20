@@ -1,6 +1,5 @@
 package vn.dungnt.nothing.data.repositories
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import vn.dungnt.nothing.data.base.NetworkResult
@@ -32,8 +31,8 @@ class BookRepositoryImpl @Inject constructor(
                 networkResult.transformToEntity(_bookListMapper)
             }
         } else {
-            localDataSource.getBooks().map { result ->
-                result.transformToEntity(_bookListMapper)
+            localDataSource.getBooks().map {
+                it.transformToEntity(_bookListMapper)
             }
         }
     }
@@ -49,8 +48,8 @@ class BookRepositoryImpl @Inject constructor(
                 networkResult.transformToEntity(_bookDetailMapper)
             }
         } else {
-            localDataSource.getBook(id).map { result ->
-                result.transformToEntity(_bookDetailMapper)
+            localDataSource.getBook(id).map {
+                it.transformToEntity(_bookDetailMapper)
             }
         }
 
